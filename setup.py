@@ -4,7 +4,8 @@ setup(
     name='europeana',
     version='0.0.1',
     author='Jose Eduardo Cejudo',
-    author_email='',
+    url = 'https://github.com/joseed-europeana/EuropeanaAPI.git',
+    author_email='joseed.cejudo@europeana.eu',
     packages=['europeana'],
     include_package_data=True,
     install_requires=[
