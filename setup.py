@@ -9,7 +9,7 @@ setup(
     packages=['europeana'],
     include_package_data=True,
     install_requires=[
-        'schema==0.7.2',
-        'requests==2.23.0'
+        #'schema==0.7.2',
+        #'requests==2.23.0'
     ],
     entry_points={'console_scripts': ['main=europeana.main:main']})
