@@ -65,7 +65,7 @@ class EDM:
     self.description = None
     self.title = None
     self.place = None
-    #self.media = None
+    self.lang = None
 
     # edm attributes
     if 'completeness' in edm_object:
@@ -76,9 +76,6 @@ class EDM:
     
     if 'dataProvider' in edm_object:
       self.dataProvider = edm_object['dataProvider'][0]
-    
-    if 'dcLanguage' in edm_object:
-      self.dcLanguage = edm_object['dcLanguage']
     
     if 'edmDatasetName' in edm_object:
       self.edmDatasetName = edm_object['edmDatasetName']
@@ -119,6 +116,10 @@ class EDM:
     if 'edmPlaceLabelLangAware' in edm_object:
       self.edmPlaceLabelLangAware = edm_object['edmPlaceLabelLangAware']
       self.place = Title(self.edmPlaceLabelLangAware)
+
+    if 'dcLanguage' in edm_object:
+      self.dcLanguage = edm_object['dcLanguage']
+      self.lang = self.dcLanguage
 
 
 

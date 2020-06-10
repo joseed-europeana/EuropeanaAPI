@@ -15,7 +15,7 @@ def main():
   
   #r = eu.search('Amsterdam',  n = 249, sort = {'term':'score','order':'asc'},  theme = 'nature')
 
-  r = eu.search('Amsterdam', n = 5,sort = {'term':'score','order':'asc'},  theme = 'nature')
+  r = eu.search('Amsterdam', n = 500,sort = {'term':'score','order':'asc'},  theme = 'nature')
   #print(r['success'])
   print(r.success)
 
@@ -32,19 +32,25 @@ def main():
       # if edm.place:
       #   print(edm.place.lang)
 
-      if edm.media_url:
-        img = url2img(edm.media_url)
-        print(img.size)
-        # img.save('{}.png'.format(i))
+      # if edm.media_url:
+      #   img = url2img(edm.media_url)
+      #   print(img.size)
+      #   # img.save('{}.png'.format(i))
 
-      if edm.thumbnail_url:
-        img = url2img(edm.thumbnail_url)
-        print(img.size)
-        # img.save('{}.png'.format(i))
+      # if edm.thumbnail_url:
+      #   img = url2img(edm.thumbnail_url)
+      #   print(img.size)
+      #   # img.save('{}.png'.format(i))
 
-      if edm.rights_url:
-        print(edm.rights_url)
+      # if edm.rights_url:
+      #   print(edm.rights_url)
 
+      # if edm.year:
+      #   print(edm.year)
+
+      # if edm.lang:
+      #   print(edm.lang)
+      #   print(len(edm.lang))
 
  
 

@@ -13,9 +13,7 @@ from .responses import *
 # - search
 # 
 # include colorpalettes
-# sort
 # profile
-# cursor?
 #
 # - translation
 
@@ -209,9 +207,6 @@ class EuropeanaAPI:
             
             response = self._search_multipage(query, **params)
             return SearchResponse(response,query,**params)
-
-            #return response
-            #return SearchResponse(self._search_multipage(query, **kwargs),query, **kwargs)
     
         # single page search
         else:
@@ -226,9 +221,7 @@ class EuropeanaAPI:
                 params.update({key:validation_dict[key](kwargs[key])})
 
             response = self._search_page(query, **params)
-            #return response
             return SearchResponse(response,query,**params)
-            #return SearchResponse(self._search_page(query, **kwargs),query, **kwargs)
 
 
     def test_request(self, query, **kwargs):
@@ -243,10 +236,6 @@ class EuropeanaAPI:
 
         else:
             print('Something went wrong with the test_request')
-
-        
-            
-
         return totalResults
 
 
