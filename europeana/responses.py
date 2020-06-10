@@ -1,22 +1,6 @@
 from .edm import EDM
 
 
-class Description(dict):
-
-    def __init__(self,desc,**kw):
-        super(Description, self).__init__(desc, **kw)
-        
-        #print(arg)
-
-        if not isinstance(desc,dict):
-            raise ValueError('Europeana API: desc must be a dictionary')
-      
-        #self = desc.copy()
-        self.lang = list(desc.keys())
-
-    # def __str__(self):
-    #     return ''
-
 
 class SearchResponse:
     def __init__(self,response, query, **kwargs):

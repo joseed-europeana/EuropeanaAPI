@@ -2,6 +2,9 @@ import os
 import urllib
 import requests
 
+from PIL import Image
+from io import BytesIO
+
 #import numpy as np
 #import pprint
 
@@ -9,14 +12,14 @@ from schema import Schema, And, Or, Use, Optional
 
 
 
-# def url2img(url):
-#     try:
-#         r = urllib.request.urlopen(url)
-#         arr = np.asarray(bytearray(r.read()), dtype=np.uint8)
-#         img = cv2.imdecode(arr, -1)
-#         return img
-#     except:
-#         return None
+
+def url2img(url):
+    try:
+        response = requests.get(url)
+        return Image.open(BytesIO(response.content))
+    except:
+        print('Europeana API: Failed to get media image')
+        pass
 
 
 def format_where(where):

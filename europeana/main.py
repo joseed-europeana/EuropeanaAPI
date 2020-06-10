@@ -1,5 +1,6 @@
 from europeana.api import EuropeanaAPI
-from europeana.responses import Description
+from europeana.edm import *
+from europeana.utils import url2img
 #from EuAPI.EuropeanaAPI import EuropeanaAPI
 
 
@@ -14,34 +15,40 @@ def main():
   
   #r = eu.search('Amsterdam',  n = 249, sort = {'term':'score','order':'asc'},  theme = 'nature')
 
-  r = eu.search('Amsterdam', n = 100,sort = {'term':'score','order':'asc'},  theme = 'nature')
+  r = eu.search('Amsterdam', n = 5,sort = {'term':'score','order':'asc'},  theme = 'nature')
   #print(r['success'])
   print(r.success)
 
   if r.success:
-    for edm in r.edm_items:
+
+    for i,edm in enumerate(r.edm_items):
+
+      # if edm.title:
+      #   print(edm.title.lang)
+
+      # if edm.description:
+      #   print(edm.description.lang)
+
+      # if edm.place:
+      #   print(edm.place.lang)
+
+      if edm.media_url:
+        img = url2img(edm.media_url)
+        print(img.size)
+        # img.save('{}.png'.format(i))
+
+      if edm.thumbnail_url:
+        img = url2img(edm.thumbnail_url)
+        print(img.size)
+        # img.save('{}.png'.format(i))
+
+      if edm.rights_url:
+        print(edm.rights_url)
 
 
-      # print(edm.dcTitleLangAware)
-      # number of languages
-      # print(len(edm.dcTitleLangAware.keys()))
-      # languages
-      # print(edm.dcTitleLangAware.keys())
-
-      #print(edm.dcDescriptionLangAware)
-      if edm.dcDescriptionLangAware:
-        #print(len(edm.dcDescriptionLangAware.keys()))
-        #print(edm.dcDescriptionLangAware.keys())
-        d = Description(edm.dcDescriptionLangAware)
-        print(d.lang)
-
-        for l in d.lang:
-          print(d[l][0])
-        #print(d[])
+ 
 
 
-
-      # print(edm.edmPlaceLabelLangAware)
 
 
 
