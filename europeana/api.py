@@ -71,7 +71,8 @@ class EuropeanaAPI:
         start_list = [i for i in range(1,n_pages)]+[n_pages]
         rows_list = [100 for i in range(1,n_pages)]+[rest]
         #initialize the search results
-        results = {'n':req_num, 'items':[],'totalResults':0, 'start':1}
+        #results = {'items':[]}
+        item_list = []
         for start, rows in zip(start_list, rows_list):
             # update page search arguments
             args_page_search.update({'start':start,'rows':rows})
@@ -81,21 +82,20 @@ class EuropeanaAPI:
             #print(response)
             if response and response['success']:
                 # include page results 
-                results['items'] += response['items']
+                item_list += response['items']
                 # include number of total results
-                results.update({'totalResults':response['totalResults']})
+                #results.update({'totalResults':response['totalResults']})
             else:
                 print('EuropeanaAPI: error requesting page {}, skipping results'.format(start))
-
-        return results
+        
+        response.update({'items':item_list})
+        return response
 
     def _search_page(self,query,**kwargs):
         params = kwargs.copy()
         params.update({'query':query})
-        results = {'n':params['rows'], 'items':[],'totalResults':0, 'start':1}
         try: 
             response = requests.get(self.search_API_url, params = params).json()
-
             return response
         except:
             print('something went wrong')
@@ -176,7 +176,6 @@ class EuropeanaAPI:
                 params.update({key:validation_dict[key](kwargs[key])})
             if key == 'theme':
                 params.update({key:self.validate_theme(kwargs[key])})
-
             if key == 'sort':
                 params.update({key:validation_dict[key](kwargs[key])})
 
@@ -207,8 +206,11 @@ class EuropeanaAPI:
             
             # validate n
             params.update({'n':self.validate_n(query,params,**kwargs)})
+            
+            response = self._search_multipage(query, **params)
+            return SearchResponse(response,query,**params)
 
-            return self._search_multipage(query, **params)
+            #return response
             #return SearchResponse(self._search_multipage(query, **kwargs),query, **kwargs)
     
         # single page search
@@ -223,8 +225,10 @@ class EuropeanaAPI:
                 key = 'start'
                 params.update({key:validation_dict[key](kwargs[key])})
 
+            response = self._search_page(query, **params)
+            #return response
+            return SearchResponse(response,query,**params)
             #return SearchResponse(self._search_page(query, **kwargs),query, **kwargs)
-            return self._search_page(query, **params)
 
 
     def test_request(self, query, **kwargs):

@@ -1,4 +1,5 @@
 from europeana.api import EuropeanaAPI
+from europeana.responses import Description
 #from EuAPI.EuropeanaAPI import EuropeanaAPI
 
 
@@ -6,26 +7,52 @@ def main():
 
   eu = EuropeanaAPI('xCQ6FUorp')
 
-  # to do: media facets
-  # look for media search in https://pro.europeana.eu/page/search
 
-  # to do: link : A link to the API object call
-  # in Result Fields outside EDM in https://pro.europeana.eu/page/search
-
-  # to do: FACETING
-  # in FACETING in https://pro.europeana.eu/page/search
   
   #print(help(eu.search))
   #r = eu.search('Amsterdam',  n = 249, sort = 'score',  theme = 'nature')
   
-  r = eu.search('Amsterdam',  n = 249, sort = {'term':'score','order':'asc'},  theme = 'nature')
+  #r = eu.search('Amsterdam',  n = 249, sort = {'term':'score','order':'asc'},  theme = 'nature')
+
+  r = eu.search('Amsterdam', n = 100,sort = {'term':'score','order':'asc'},  theme = 'nature')
+  #print(r['success'])
+  print(r.success)
+
+  if r.success:
+    for edm in r.edm_items:
 
 
-  print(r.keys())
+      # print(edm.dcTitleLangAware)
+      # number of languages
+      # print(len(edm.dcTitleLangAware.keys()))
+      # languages
+      # print(edm.dcTitleLangAware.keys())
 
-  print(r['n'])
-  print(len(r['items']))
-  print(r['totalResults'])
+      #print(edm.dcDescriptionLangAware)
+      if edm.dcDescriptionLangAware:
+        #print(len(edm.dcDescriptionLangAware.keys()))
+        #print(edm.dcDescriptionLangAware.keys())
+        d = Description(edm.dcDescriptionLangAware)
+        print(d.lang)
+
+        for l in d.lang:
+          print(d[l][0])
+        #print(d[])
+
+
+
+      # print(edm.edmPlaceLabelLangAware)
+
+
+
+  # print(r.api_response.keys())
+  # print(r.api_response['error'])
+
+  #print(r.keys())
+
+  #print(r['n'])
+  #print(len(r['items']))
+  #print(r['totalResults'])
 
 
   # print('total number of results: {}'.format(r.totalResults))
