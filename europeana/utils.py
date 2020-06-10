@@ -5,7 +5,7 @@ import requests
 #import numpy as np
 #import pprint
 
-from schema import Schema, And, Use, Optional
+from schema import Schema, And, Or, Use, Optional
 
 
 
@@ -120,18 +120,26 @@ def validate_n(n):
         raise ValueError('EuropeanaAPI: n must be a positive integer smaller than 10000')
 
 
-def new_validate_n(n):
-    try:
-        return Schema(And(Use(int), lambda x: 1 <= x <= 10000)).validate(n)
+def validate_sort(sort):
+  sort_list = ['score', 'timestamp_created', 'timestamp_update', 'europeana_id', 'COMPLETENESS', 'is_fulltext', 'has_thumbnails', 'has_media']
 
-        
-    except:
-        raise ValueError('EuropeanaAPI: n must be a positive integer smaller than 10000')
+  schema = Schema(Or(
+      {'term': lambda n: n in sort_list, Optional('order', default='asc'): lambda n: n in ['asc','desc']},
+      And(Use(str),lambda n: n in sort_list)
+  ))
 
+  try:
+    validated = schema.validate(sort)
+    if isinstance(validated,str):
+      return '{}+asc'.format(validated)
+    else:
+      return '{}+{}'.format(validated['term'],validated['order']) 
 
-
-
-
+  except:
+    raise ValueError('Europeana API: sort must be a string term_value or a dict \
+    {"term":term_value,"order":order_value} where term_value in \
+     ["score", "timestamp_created", "timestamp_update", "europeana_id", "COMPLETENESS", "is_fulltext", "has_thumbnails, "has_media"] \
+     and order_value in ["asc","desc"]')
 
 
 

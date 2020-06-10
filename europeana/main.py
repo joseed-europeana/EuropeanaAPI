@@ -15,9 +15,11 @@ def main():
   # to do: FACETING
   # in FACETING in https://pro.europeana.eu/page/search
   
-  print(help(eu.search))
-  r = eu.search('Amsterdam',  n = 249, reusability = 'open',  theme = 'nature')
+  #print(help(eu.search))
+  #r = eu.search('Amsterdam',  n = 249, sort = 'score',  theme = 'nature')
   
+  r = eu.search('Amsterdam',  n = 249, sort = {'term':'score','order':'asc'},  theme = 'nature')
+
 
   print(r.keys())
 

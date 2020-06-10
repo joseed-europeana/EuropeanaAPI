@@ -24,7 +24,7 @@ class EuropeanaAPI:
     def __init__(self,wskey):
         self.wskey = wskey
         self.search_API_url = 'https://www.europeana.eu/api/v2/search.json?'
-        self.accepted_arguments = ['n','rows', 'start', 'media', 'where', 'who', 'range','lat','lon','reusability','thumbnail','landingpage', 'theme']
+        self.accepted_arguments = ['n','rows', 'start', 'media', 'where', 'who', 'range','lat','lon','reusability','thumbnail','landingpage', 'theme','sort']
         self.refined_search_arguments = ['where','who','lat','lon','range']
         self.themes = ['archaeology','art','fashion','industrial','manuscript','map','migration','music','nature','newspaper','photography','sport','ww1']
 
@@ -38,6 +38,8 @@ class EuropeanaAPI:
             'reusability':validate_reusability,
             'thumbnail':validate_thumbnail,
             'landingpage':validate_landingpage,
+            'sort': validate_sort,
+
             # refined search parameters
             'where':format_where,
             'who':format_who,
@@ -116,18 +118,39 @@ class EuropeanaAPI:
 
         start :  1 <= int <= 100  default = 1
           Page number if single page request. Not compatible with argument "n"
+        
+        where : string
+          Location of the cultural heritage object
+
+        who : string
+          Author of the work
+
+        lat : [float,float]
+          Latitude of the work
+
+        lon : [float,float]
+          Longitude of the work
+
+        range: [string,string]
+          ***Description needed***
 
         media :  bool  default = True
           Whether the results should have media
 
-        reusability :  str in []  default = 1
-          Rights?
+        reusability :  str in ['open','restricted','permission']
+          Rights for using the data
 
         thumbnail :  bool  default = True
-          Rights?
+          Whether the results should have thumbnails
 
-        theme :  str in []  default = 1
-          Rights?
+        landingpage : bool default = False
+          ***Description needed***
+
+        theme :  str in ['archaeology','art','fashion','industrial',
+          'manuscript','map','migration','music','nature',
+          'newspaper','photography','sport','ww1']
+\
+          
 
         """
 
@@ -149,12 +172,13 @@ class EuropeanaAPI:
                 params.update({key:validation_dict[key](kwargs[key])})
             if key == 'reusability':
                 params.update({key:validation_dict[key](kwargs[key])})
-
             if key == 'thumbnail':
                 params.update({key:validation_dict[key](kwargs[key])})
-
             if key == 'theme':
                 params.update({key:self.validate_theme(kwargs[key])})
+
+            if key == 'sort':
+                params.update({key:validation_dict[key](kwargs[key])})
 
             # refined search parameters
             if key == 'where':
@@ -240,9 +264,6 @@ class EuropeanaAPI:
             return Schema(And(Use(str), lambda n: n in self.themes)).validate(theme)
         except:
             raise ValueError(f'EuropeanaAPI: "theme" must be in {self.themes}')
-
-
-
 
 
 
