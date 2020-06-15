@@ -3,6 +3,21 @@ from .edm import EDM
 
 
 class SearchResponse:
+    """
+    Documentation of the search response here
+
+    Attributes :
+        query : str
+        success : bool
+
+        params : dict, Search parameters
+        api_response : dict, Original Search API response
+        
+        num_items : int, Number of items returned by the response
+        edm_items : int, Items modeled with the Europeana Data Model
+        totalResults : int, Total number of items that match with the query 
+
+    """
     def __init__(self,response, query, **kwargs):
 
         # query attributes
@@ -13,7 +28,7 @@ class SearchResponse:
         self.api_response = response
         self.success = response['success']
 
-        self.items = None
+        self.success = None
         self.num_items = None
         self.edm_items = None
         self.totalResults = None

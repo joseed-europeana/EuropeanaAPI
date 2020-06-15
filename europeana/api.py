@@ -31,7 +31,7 @@ class EuropeanaAPI:
         eu.accepted_arguments
         eu.themes
 
-    Modules:
+    Methods:
         Search: help(eu.search)
         Record: help(eu.record)
 
@@ -176,6 +176,11 @@ class EuropeanaAPI:
         theme :  str in ['archaeology','art','fashion','industrial',
           'manuscript','map','migration','music','nature',
           'newspaper','photography','sport','ww1']
+
+
+        sort : dict {'term':'score','order':'asc'}
+            'term' : 
+            'order' : 
 \
           
 
