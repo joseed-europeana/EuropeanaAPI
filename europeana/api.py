@@ -9,15 +9,33 @@ from .utils import *
 from .responses import *
 
 
-# todo:
-# - search
-# 
-# include colorpalettes
-# profile
-#
-# - translation
+
 
 class EuropeanaAPI:
+
+    """
+    Python wrapper for Europeana's API
+
+    Get your API key here: https://pro.europeana.eu/pages/get-api
+
+    Usage:
+
+        from europeana.api import EuropeanaAPI
+        eu = EuropeanaAPI('your_API_key')
+        r = eu.search('Amsterdam', theme = 'nature')
+        print('total number of results: {}'.format(r['totalResults']))
+
+    Attributes:
+
+        eu.wskey
+        eu.accepted_arguments
+        eu.themes
+
+    Modules:
+        Search: help(eu.search)
+        Record: help(eu.record)
+
+    """
 
     def __init__(self,wskey):
         self.wskey = wskey
@@ -49,6 +67,17 @@ class EuropeanaAPI:
 
 
     def record(self, record_id):
+        """
+        Wrapper for Europeana's Record API;
+
+        Input: 
+            record_id: string
+                id of the cultural heritage object
+
+        Response:
+            raw Europeana API response
+
+        """
         try:
             url = f'https://www.europeana.eu/api/v2/record{record_id}.json?'
             return requests.get(url, params = {'wskey':self.wskey}).json()
