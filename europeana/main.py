@@ -6,7 +6,7 @@ from europeana.utils import url2img
 
 def main():
 
-  eu = EuropeanaAPI('xCQ6FUorp')
+  eu = EuropeanaAPI('your_API_key')
 
 
   
@@ -23,8 +23,8 @@ def main():
 
     for i,edm in enumerate(r.edm_items):
 
-      # if edm.title:
-      #   print(edm.title.lang)
+      if edm.title:
+        print(edm.title.lang)
 
       # if edm.description:
       #   print(edm.description.lang)
