@@ -21,6 +21,11 @@ def url2img(url):
         print('Europeana API: Failed to get media image')
         pass
 
+def format_what(what):
+    try:
+        return '(what:{})'.format(Schema(And(str)).validate(what))
+    except:
+        raise ValueError('EuropeanaAPI: "what" must be a string')
 
 def format_where(where):
     try:

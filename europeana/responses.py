@@ -24,14 +24,16 @@ class SearchResponse:
         self.query = query
         self.params = kwargs
 
-        # response attributes
-        self.api_response = response
-        self.success = response['success']
-
         self.success = None
         self.num_items = None
         self.edm_items = None
         self.totalResults = None
+
+        # response attributes
+        self.api_response = response
+        self.success = response['success']
+
+
 
         if self.success:
             self.items = response['items']
